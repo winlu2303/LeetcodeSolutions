@@ -1,0 +1,27 @@
+func longestDupSubstring(s string) string {
+    res := ""
+   
+    capCan := func (L int) bool {
+        seen := make(map[string]bool, len(s)-L+2)
+        for i := 0; i+L <= len(s); i++ {
+            sub := s[i : i+L]
+            if seen[sub] {
+                res = sub
+                return true
+            }
+            seen[sub] = true
+        }
+        return false
+    }
+   
+    win, lu := 0, len(s)
+    for win < lu {
+        me := (win + lu +1) / 2
+        if capCan(me) {
+            win = me
+        } else {
+            lu = me - 1 
+        }
+    }
+    return res
+}
